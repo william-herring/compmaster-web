@@ -1,0 +1,18 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+}
+
+model User {
+  id            String       @default(cuid()) @id
+  wcaId         String?      @unique
+  name          String?
+  avatar        String?
+  delegate      Boolean      @default(false)
+  createdAt     DateTime     @default(now()) @map(name: "created_at")
+  updatedAt     DateTime     @updatedAt @map(name: "updated_at")
+}
