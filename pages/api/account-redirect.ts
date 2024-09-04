@@ -1,4 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { getIronSession } from 'iron-session'
+import { cookies } from "next/headers";
+
+type SessionData = {
+    password: string;
+    cookieName: string;
+    user: {
+        id: number;
+        wcaId: string;
+        name: string;
+        avatar: string;
+        isDelegate: boolean;
+    }
+}
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const redirect = req.query.redirect || '/my-competitions'
@@ -15,6 +29,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         })
     }).then((r) => r.json())
     const token = data['access_token']
+
+    const session = await getIronSession<SessionData>(cookies(), { })
     // res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Secure`);
 
     const userData = await fetch('https://www.worldcubeassociation.org/api/v0/me', {
