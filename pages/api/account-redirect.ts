@@ -1,14 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getIronSession } from 'iron-session'
 import prisma from "@/lib/prisma";
-
-type SessionData = {
-    id: number;
-    wcaId: string | null;
-    name: string;
-    avatar: string;
-    isDelegate: boolean;
-}
+import { SessionData } from "@/lib/session";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const redirect = req.query.redirect || '/my-competitions'
@@ -45,12 +38,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     })
 
     const session = await getIronSession<SessionData>(req, res, {
-        password: token,
-        cookieName: 'user',
+        password: process.env.SESSION_PASSWORD!,
+        cookieName: 'session',
         cookieOptions: {
             secure: process.env.NODE_ENV === "production",
         }
     })
+    session.accessToken = token
     session.id = user.id
     session.wcaId = user.wcaId
     session.name = user.name!
