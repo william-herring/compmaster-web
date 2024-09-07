@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getIronSession } from 'iron-session';
 import { SessionData } from "@/lib/session";
 import {NextPage} from "next";
+import CompetitionCard from "@/components/CompetitionCard";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,63 +38,33 @@ export default function Home({ session }: MyCompetitionsProps) {
                     <h1 className='font-semibold'>My Competitions</h1>
                 </div>
                 <Link href='/' className='ml-auto'>
-                    <img className='object-cover rounded-full h-10 w-10' src={session.avatar} alt='avatar' />
+                    <img className='object-cover rounded-full w-10 h-10' src={session.avatar} alt='avatar' />
                 </Link>
             </div>
             <div className='flex w-full h-screen p-6 pt-36'>
-                <div className='flex border-2 p-6 w-2/3 h-min'>
-                    <div className='flex flex-col'>
-                        <div className='flex flex-col space-y-3'>
-                            <h1 className='font-semibold'>Melbourne Summer 2025</h1>
-                            <div className='flex space-x-2'>
-                                <svg width="24px" height="24px" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
-                                     xmlns="http://www.w3.org/2000/svg" color="#000000">
-                                    <path
-                                        d="M20 10C20 14.4183 12 22 12 22C12 22 4 14.4183 4 10C4 5.58172 7.58172 2 12 2C16.4183 2 20 5.58172 20 10Z"
-                                        stroke="#000000" stroke-width="1.5"></path>
-                                    <path
-                                        d="M12 11C12.5523 11 13 10.5523 13 10C13 9.44772 12.5523 9 12 9C11.4477 9 11 9.44772 11 10C11 10.5523 11.4477 11 12 11Z"
-                                        fill="#000000" stroke="#000000" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round"></path>
-                                </svg>
-                                <h2>Community Bank Stadium</h2>
-                            </div>
-                            <div className='flex space-x-2'>
-                                <svg width="24px" height="24px" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
-                                     xmlns="http://www.w3.org/2000/svg" color="#000000">
-                                    <path
-                                        d="M15 4V2M15 4V6M15 4H10.5M3 10V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V10H3Z"
-                                        stroke="#000000" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round"></path>
-                                    <path d="M3 10V6C3 4.89543 3.89543 4 5 4H7" stroke="#000000" stroke-width="1.5"
-                                          stroke-linecap="round" stroke-linejoin="round"></path>
-                                    <path d="M7 2V6" stroke="#000000" stroke-width="1.5" stroke-linecap="round"
-                                          stroke-linejoin="round"></path>
-                                    <path d="M21 10V6C21 4.89543 20.1046 4 19 4H18.5" stroke="#000000"
-                                          stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                </svg>
-                                <h2>January 24-26, 2025</h2>
-                            </div>
-                        </div>
-                        <div className='flex flex-col space-y-3'>
-                            <div className='flex space-x-2 mt-8'>
-                                <div className='flex space-x-1'>
-                                    <img className='object-cover rounded-full h-6 w-6' src={session.avatar}
-                                         alt='avatar'/>
-                                </div>
-                                <p className='text-gray-500'>1 person has access</p>
-                            </div>
-                        </div>
+                <div className='flex flex-col space-y-5 w-3/5'>
+                    <div className='p-3 rounded-xl text-center font-semibold bg-gray-300'>
+                        Added to Compmaster
                     </div>
-                    <div className='ml-auto flex flex-col space-y-3'>
-                        <Link href='/competition/[compId]/'
-                              className='p-3 bg-blue-500 text-white text-center rounded-xl'>
-                            Manage
-                        </Link>
-                        <Link href='/competition/[compId]/start'
-                              className='p-3 bg-blue-500 text-white text-center rounded-xl'>
-                            Start competition
-                        </Link>
+                    <CompetitionCard compId={'MelbourneSummer2025'} name={'Melbourne Summer 2025'}
+                                     venue={'Community Bank Stadium'} startDate={new Date('2025-01-24')}
+                                     endDate={new Date('2025-01-26')} organisers={
+                        [{
+                            name: session.name,
+                            avatar: session.avatar,
+                        }]
+                    }/>
+                    <CompetitionCard compId={'SampleComp2025'} name={'Sample Competition 2025'} venue={'Mars'}
+                                     startDate={new Date('2025-04-12')} endDate={new Date('2025-04-13')} organisers={
+                        [{
+                            name: session.name,
+                            avatar: session.avatar,
+                        }]
+                    }/>
+                </div>
+                <div className='fex flex-col w-2/5 pl-12'>
+                    <div className='p-3 rounded-xl text-center font-semibold bg-gray-300'>
+                    Competitions to add
                     </div>
                 </div>
             </div>
