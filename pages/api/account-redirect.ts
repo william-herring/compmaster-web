@@ -6,7 +6,7 @@ import { SessionData } from "@/lib/session";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const redirect = req.query.redirect || '/my-competitions'
     const code = req.query.code
-    const data = await fetch('https://www.worldcubeassociation.org/oauth/token', {
+    const data = await fetch(`${process.env.WCA_URL}/oauth/token`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -19,10 +19,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }).then((r) => r.json())
     const token = data['access_token']
 
-    const userData = await fetch('https://www.worldcubeassociation.org/api/v0/me', {
+    console.log(code)
+
+    const userData = await fetch(`${process.env.WCA_URL}/api/v0/me`, {
         method: 'GET',
         headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
     }).then(r => r.json())
+
+    console.log(userData['me'])
 
     const user = await prisma.user.findUnique({
         where: {

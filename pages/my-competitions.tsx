@@ -22,6 +22,13 @@ export async function getServerSideProps({ req, res }) {
         }
     })
 
+    const userData = await fetch(`${process.env.WCA_URL}/api/v0/me`, {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${session.accessToken}`},
+    }).then(r => r.json())
+
+    console.log(userData)
+
     return { props: { session } };
 }
 
