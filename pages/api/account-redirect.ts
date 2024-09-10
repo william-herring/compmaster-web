@@ -19,14 +19,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }).then((r) => r.json())
     const token = data['access_token']
 
-    console.log(code)
-
     const userData = await fetch(`${process.env.WCA_URL}/api/v0/me`, {
         method: 'GET',
         headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
     }).then(r => r.json())
-
-    console.log(userData['me'])
 
     const user = await prisma.user.findUnique({
         where: {

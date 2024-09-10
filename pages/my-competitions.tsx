@@ -9,7 +9,8 @@ import CompetitionCard from "@/components/CompetitionCard";
 const inter = Inter({ subsets: ["latin"] });
 
 interface MyCompetitionsProps {
-    session: SessionData
+    session: SessionData,
+    myWcaCompetitions: Array<any>
 }
 
 // @ts-ignore
@@ -22,17 +23,19 @@ export async function getServerSideProps({ req, res }) {
         }
     })
 
-    const userData = await fetch(`${process.env.WCA_URL}/api/v0/me`, {
+    const oneWeekAgo = new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
+
+    const myWcaCompetitions = await fetch(`${process.env.WCA_URL}/api/v0/competitions?managed_by_me=true&start=${oneWeekAgo.toISOString()}&sort=start_date`, {
         method: 'GET',
         headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${session.accessToken}`},
     }).then(r => r.json())
 
-    console.log(userData)
+    console.log(myWcaCompetitions)
 
-    return { props: { session } };
+    return { props: { session, myWcaCompetitions } };
 }
 
-export default function Home({ session }: MyCompetitionsProps) {
+export default function Home({ session, myWcaCompetitions }: MyCompetitionsProps) {
     return (
         <main
             className={`${inter.className}`}
@@ -73,6 +76,9 @@ export default function Home({ session }: MyCompetitionsProps) {
                     <div className='p-3 rounded-xl text-center font-semibold bg-gray-300'>
                     Competitions to add
                     </div>
+                    {myWcaCompetitions.map((comp) => <div key={comp.id}>
+                        <h1>{comp.name}</h1>
+                    </div>)}
                 </div>
             </div>
         </main>

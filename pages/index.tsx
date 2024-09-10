@@ -14,7 +14,7 @@ export default function Home() {
           <Image src='/compmaster-logo.svg' alt='logo' width={64} height={64}/>
         </Link>
         <div className='flex flex-col space-y-5 border-l-2 px-8'>
-          <Link href={process.env.NODE_ENV == "production"? "https://www.worldcubeassociation.org/oauth/authorize?client_id=-bokwns3fw-VMbv7QyCdIXOenc79O5hnQqk2hkLq8Cs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Faccount-redirect%3Fredirect%3D%2Fmy-competitions&response_type=code&scope=" : "https://staging.worldcubeassociation.org/oauth/authorize?client_id=JIoXQXWTGv83SBWCKzrJ8-cWQUyDmYTSsLMaTglkiuI&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Faccount-redirect%3Fredirect%3D%2Fmy-competitions&response_type=code&scope="}
+          <Link href={process.env.NODE_ENV == "production"? "https://www.worldcubeassociation.org/oauth/authorize?client_id=-bokwns3fw-VMbv7QyCdIXOenc79O5hnQqk2hkLq8Cs&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Faccount-redirect%3Fredirect%3D%2Fmy-competitions&response_type=code&scope=" : "https://staging.worldcubeassociation.org/oauth/authorize?client_id=HVAooX8NCOnUfHbjeNWlsjBnROTIxBHg_sOGp5BKpcE&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Faccount-redirect%3Fredirect%3D%2Fmy-competitions&response_type=code&scope=public+manage_competitions"}
               className='flex items-center justify-center bg-white min-w-64 space-x-3 p-3 border-2 rounded-xl drop-shadow-sm'>
             <Image src='/wca-logo.svg' alt='logo' width={18} height={18}/>
             <p>Sign in with WCA</p>
