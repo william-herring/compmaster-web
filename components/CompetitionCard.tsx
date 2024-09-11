@@ -4,14 +4,13 @@ interface CompetitionCardProps {
     compId: string;
     name: string;
     venue: string;
-    startDate: Date;
-    endDate: Date;
+    dateRange: string;
     organisers: { name: string; avatar: string; }[]
 }
 
 export default function CompetitionCard(props: CompetitionCardProps) {
     return (
-        <div className='flex border-2 p-6 h-min'>
+        <div className='flex p-6 h-min'>
             <div className='flex flex-col'>
                 <div className='flex flex-col space-y-3'>
                     <h1 className='font-semibold'>{props.name}</h1>
@@ -42,7 +41,7 @@ export default function CompetitionCard(props: CompetitionCardProps) {
                             <path d="M21 10V6C21 4.89543 20.1046 4 19 4H18.5" stroke="#000000"
                                   stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                         </svg>
-                        <h2>{props.startDate.toDateString()} - {props.endDate.toDateString()}</h2>
+                        <h2>{props.dateRange}</h2>
                     </div>
                 </div>
                 <div className='flex flex-col space-y-3'>

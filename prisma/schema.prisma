@@ -15,4 +15,58 @@ model User {
   delegate      Boolean      @default(false)
   createdAt     DateTime     @default(now()) @map(name: "created_at")
   updatedAt     DateTime     @updatedAt @map(name: "updated_at")
+  competitions  CompetitionsOnUsers[]
+}
+
+model Competition {
+  id           Int           @id @default(autoincrement())
+  compId       String
+  name         String
+  venue        String
+  dateRange    String
+  rounds       Round[]
+  organisers   CompetitionsOnUsers[]
+}
+
+model Competitor {
+  id           Int           @id @default(autoincrement())
+  name         String
+  wcaId        String?
+  groups       GroupsOnCompetitors[]
+}
+
+model Round {
+  id               Int           @id @default(autoincrement())
+  event            String
+  scheduledStart   DateTime
+  scheduledEnd     DateTime
+  groups           Group[]
+  competition      Competition  @relation(fields: [competitionId], references: [id])
+  competitionId    Int
+}
+
+model Group {
+  id               Int           @id @default(autoincrement())
+  groupNumber      Int
+  competitors      GroupsOnCompetitors[]
+  round            Round         @relation(fields: [roundId], references: [id])
+  roundId          Int
+}
+
+model GroupsOnCompetitors {
+  competitor      Competitor     @relation(fields: [competitorId], references: [id])
+  competitorId    Int
+  group           Group          @relation(fields: [groupId], references: [id])
+  groupId         Int
+
+  @@id([competitorId, groupId])
+}
+
+model CompetitionsOnUsers {
+  user            User           @relation(fields: [userId], references: [id])
+  userId          Int
+  competition     Competition    @relation(fields: [competitionId], references: [id])
+  competitionId   Int
+
+  @@id([userId, competitionId])
 }
