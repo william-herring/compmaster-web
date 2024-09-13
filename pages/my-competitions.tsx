@@ -76,7 +76,7 @@ export default function Home({ session, myWcaCompetitions, myCompetitions }: MyC
             </div>
             <div className='flex w-full h-screen p-6 pt-36'>
                 <div className='flex flex-col space-y-5 w-3/5'>
-                    <div className='p-3 rounded-xl text-center font-semibold bg-gray-300'>
+                    <div className='p-3 rounded-xl text-center font-semibold bg-gray-200'>
                         Added to Compmaster
                     </div>
                     {myCompetitions.map((comp) => <CompetitionCard compId={comp.compId} name={comp.name} venue={comp.venue} dateRange={comp.dateRange} organisers={comp.organisers} key={comp.name} />)}
@@ -96,7 +96,7 @@ export default function Home({ session, myWcaCompetitions, myCompetitions }: MyC
                     }/>
                 </div>
                 <div className='fex flex-col space-y-5 w-2/5 pl-12'>
-                    <div className='p-3 rounded-xl text-center font-semibold bg-gray-300'>
+                    <div className='p-3 rounded-xl text-center font-semibold bg-gray-200'>
                     Competitions to add
                     </div>
                     {myWcaCompetitions.map((comp) => <div key={comp.id} className='flex items-center p-3'>
