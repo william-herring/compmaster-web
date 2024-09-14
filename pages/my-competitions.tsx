@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import Link from "next/link";
 import { getIronSession } from 'iron-session';
 import { SessionData } from "@/lib/session";
-import {NextPage} from "next";
 import CompetitionCard from "@/components/CompetitionCard";
 import prisma from "@/lib/prisma";
 
@@ -33,7 +32,7 @@ export async function getServerSideProps({ req, res }) {
 
     const oneWeekAgo = new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
 
-    const myWcaCompetitions = await fetch(`${process.env.WCA_URL}/api/v0/competitions?managed_by_me=true&start=${oneWeekAgo.toISOString()}&sort=start_date`, {
+    let myWcaCompetitions = await fetch(`${process.env.WCA_URL}/api/v0/competitions?managed_by_me=true&start=${oneWeekAgo.toISOString()}&sort=start_date`, {
         method: 'GET',
         headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${session.accessToken}`},
     }).then(r => r.json())
@@ -41,6 +40,8 @@ export async function getServerSideProps({ req, res }) {
         where: { organisers: { some: { id: session.id } } },
         select: { id: true, compId: true, name: true, venue: true, dateRange: true, organisers: { select: { wcaId: true, name: true, avatar: true, delegate: true } } }
     })
+
+    myWcaCompetitions = myWcaCompetitions.map((c1: any) => myCompetitions.some((c2) => c2.compId == c1.id)? null : c1 )
 
     return { props: { session, myWcaCompetitions, myCompetitions } };
 }
@@ -80,26 +81,12 @@ export default function Home({ session, myWcaCompetitions, myCompetitions }: MyC
                         Added to Compmaster
                     </div>
                     {myCompetitions.map((comp) => <CompetitionCard compId={comp.compId} name={comp.name} venue={comp.venue} dateRange={comp.dateRange} organisers={comp.organisers} key={comp.name} />)}
-                    <CompetitionCard compId={'MelbourneSummer2025'} name={'Melbourne Summer 2025'}
-                                     venue={'Community Bank Stadium'} dateRange={'Jan 24 - 26'} organisers={
-                        [{
-                            name: session.name,
-                            avatar: session.avatar,
-                        }]
-                    }/>
-                    <CompetitionCard compId={'SampleComp2025'} name={'Sample Competition 2025'} venue={'Mars'}
-                                     dateRange={'Apr 12 - 13'} organisers={
-                        [{
-                            name: session.name,
-                            avatar: session.avatar,
-                        }]
-                    }/>
                 </div>
                 <div className='fex flex-col space-y-5 w-2/5 pl-12'>
                     <div className='p-3 rounded-xl text-center font-semibold bg-gray-200'>
                     Competitions to add
                     </div>
-                    {myWcaCompetitions.map((comp) => <div key={comp.id} className='flex items-center p-3'>
+                    {myWcaCompetitions.map((comp) => comp == null? comp : <div key={comp.id} className='flex items-center p-3'>
                         <div className='flex flex-col'>
                             <h1 className='font-semibold'>{comp.name}</h1>
                             <h2>{comp.date_range}</h2>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Markdown from 'react-markdown'
 
 interface CompetitionCardProps {
     compId: string;
@@ -25,7 +26,7 @@ export default function CompetitionCard(props: CompetitionCardProps) {
                                 fill="#000000" stroke="#000000" stroke-width="1.5" stroke-linecap="round"
                                 stroke-linejoin="round"></path>
                         </svg>
-                        <h2>{props.venue}</h2>
+                        <Markdown>{props.venue}</Markdown>
                     </div>
                     <div className='flex space-x-2'>
                         <svg width="24px" height="24px" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
