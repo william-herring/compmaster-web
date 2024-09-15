@@ -20,7 +20,7 @@ model User {
 
 model Competition {
   id           Int           @id @default(autoincrement())
-  compId       String
+  compId       String        @unique
   name         String
   venue        String
   dateRange    String
