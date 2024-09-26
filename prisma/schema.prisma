@@ -38,6 +38,7 @@ model Competitor {
 model Round {
   id               Int           @id @default(autoincrement())
   event            String
+  title            String
   scheduledStart   DateTime
   scheduledEnd     DateTime
   groups           Group[]
