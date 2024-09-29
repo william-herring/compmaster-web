@@ -70,7 +70,7 @@ export default function Home({ session, competition }: CompetitionProps) {
                     <img className='object-cover rounded-full w-10 h-10' src={session.avatar} alt='avatar' />
                 </Link>
             </div>
-            <div className='flex flex-col w-full h-screen p-6 pt-36 space-y-6'>
+            <div className='flex flex-col w-full h-screen p-6 pt-32 space-y-6'>
                 <div className='flex w-full h-min font-semibold'>
                     <Link href={`/competition/${competition.compId}/`} className='p-3 rounded-l-xl bg-gray-400 text-center w-1/3'>Dashboard</Link>
                     <Link href={`/competition/${competition.compId}/groups`} className='p-3 bg-gray-400 text-center w-1/3 bg-opacity-40'>Groups</Link>
@@ -82,21 +82,57 @@ export default function Home({ session, competition }: CompetitionProps) {
                         <p>Groups and stations have not been configured</p>
                     </Link> : null
                 }
-                <div className='flex flex-col space-y-10'>
-                    {competition.rounds.map(round => {
-                        const roundStart = new Date(round.scheduledStart)
-                        const roundEnd = new Date(round.scheduledEnd)
-                        return <div key={round.id} className='flex-col'>
-                            <h1 className='font-semibold'>{round.title}</h1>
-                            <p>{roundStart.toLocaleDateString()}, {roundStart.toLocaleTimeString().slice(0, -3)} - {roundEnd.toLocaleTimeString().slice(0, -3)}</p>
-                            <div className='ml-4 space-y-2 mt-2'>
-                                {round.groups.map(group => <div key={group.id} className='flex items-center space-x-3'>
-                                    <a href=''>Group {group.groupNumber}</a>
-                                    <button onClick={() => {}} className='flex items-center justify-center py-1 px-4 rounded-xl text-white bg-blue-500'>Start</button>
-                                </div>)}
+                <div className='flex w-full'>
+                    <div className='flex flex-col space-y-10 w-1/3'>
+                        {competition.rounds.map(round => {
+                            const roundStart = new Date(round.scheduledStart)
+                            const roundEnd = new Date(round.scheduledEnd)
+                            return <div key={round.id} className='flex-col'>
+                                <h1 className='font-semibold'>{round.title}</h1>
+                                <p>{roundStart.toLocaleDateString()}, {roundStart.toLocaleTimeString().slice(0, -3)} - {roundEnd.toLocaleTimeString().slice(0, -3)}</p>
+                                <div className='ml-4 space-y-2 mt-2'>
+                                    {round.groups.map(group => <div key={group.id}
+                                                                    className='flex items-center space-x-3'>
+                                        <a href=''>Group {group.groupNumber}</a>
+                                        <button onClick={() => {
+                                        }}
+                                                className='flex items-center justify-center py-1 px-4 rounded-xl text-white bg-blue-500'>Start
+                                        </button>
+                                    </div>)}
+                                </div>
                             </div>
-                        </div>
-                    })}
+                        })}
+                    </div>
+                    <div className='w-2/3'>
+                        <table className='w-full text-left'>
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Station</th>
+                                <th>Name</th>
+                                <th>1</th>
+                                <th>2</th>
+                                <th>3</th>
+                                <th>4</th>
+                                <th>5</th>
+                                <th>Average</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><a className='underline text-blue-500' href='/station/[stationId]'>1</a></td>
+                                <td><a className='underline text-blue-500' href='/competitor/[competitorId]'>Feliks Zemdegs</a></td>
+                                <td>7.09</td>
+                                <td>6.15</td>
+                                <td>6.90</td>
+                                <td>DNF</td>
+                                <td>5.37</td>
+                                <td>6.71</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </main>

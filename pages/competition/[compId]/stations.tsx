@@ -69,7 +69,7 @@ export default function Home({ session, competition }: CompetitionProps) {
                     <img className='object-cover rounded-full w-10 h-10' src={session.avatar} alt='avatar' />
                 </Link>
             </div>
-            <div className='flex flex-col w-full h-screen p-6 pt-36 space-y-6'>
+            <div className='flex flex-col w-full h-screen p-6 pt-32 space-y-6'>
                 <div className='flex w-full h-min font-semibold'>
                     <Link href={`/competition/${competition.compId}/`} className='p-3 rounded-l-xl bg-gray-400 text-center w-1/3 bg-opacity-40'>Dashboard</Link>
                     <Link href={`/competition/${competition.compId}/groups`} className='p-3 bg-gray-400 text-center w-1/3 bg-opacity-40'>Groups</Link>
